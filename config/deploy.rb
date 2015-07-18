@@ -2,13 +2,13 @@
 lock '3.4.0'
 
 set :application, 'HGC'
-set :repo_url, '.'
+set :repo_url, 'https://github.com/marioffm81/hgc'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/rails/HGC'
+set :deploy_to, '/kunden/hartis-gartenclub.de/rails/hgc'
 
 # Default value for :scm is :git
  set :scm, :git
