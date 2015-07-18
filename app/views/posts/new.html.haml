@@ -1,0 +1,4 @@
+= form_for @post do |f|
+	= f.text_field :title, :placeholder => 'Titel'
+	= f.text_area :content, :placeholder => 'Inhalt'
+	= f.submit "Create Post"

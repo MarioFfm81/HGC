@@ -1,0 +1,2 @@
+module OpenLigaDbHelper
+end
