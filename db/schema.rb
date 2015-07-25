@@ -11,23 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150705155238) do
+ActiveRecord::Schema.define(version: 20150725071346) do
 
   create_table "posts", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.string   "content",    limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "title"
+    t.string   "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tipps", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "spiel"
+    t.integer  "tipp1"
+    t.integer  "tipp2"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",        limit: 255
-    t.string   "first_name",      limit: 255
-    t.string   "last_name",       limit: 255
-    t.string   "password_digest", limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "role",            limit: 255
+    t.string   "username"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "role"
   end
 
 end

@@ -10,7 +10,6 @@ class OverviewsController < ApplicationController
 		if currentMatchday['GroupOrderID']
 			redirect_to "/overviews/#{currentMatchday['GroupOrderID']}"
 		end
-		
 	end
 	
 	def show

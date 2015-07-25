@@ -27,7 +27,8 @@
               =link_to "Tippübersicht", '/overviews'
             .col-xs-2
               -if current_user
-                Tippen
+                .col-xs-2 
+                  =link_to "Tippen", '/tippen'
             .col-xs-2
               -if current_user
                 Profil

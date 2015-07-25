@@ -1,0 +1,51 @@
+-if flash.notice
+    %div{:id=>"Flash", :class=>"success"} #{flash.notice}
+-if flash.alert
+    %div{:id=>"Flash", :class=>"alert"} #{flash.notice}
+%select{:onchange=>"changeMatchday(this)"}
+    -(1..34).each do |i|
+        -if i==@currentMatchday.to_i
+            %option{:value=>"#{tipps_path(i)}", :selected=>true} Spieltag #{i}
+        -else
+            %option{:value=>"#{tipps_path(i)}"} Spieltag #{i}
+
+=form_for @tipp do |f|
+    %table{:border=>"1", :id=>"ContentTable"}
+        %tr
+            %th Datum
+            %th Uhrzeit
+            %th Heim
+            %th Gast
+            %th Ergebnis
+            %th Tipp
+        -@games.each do |game|
+            %tr
+                %td #{game['date']}
+                %td #{game['time']}
+                %td
+                    =image_tag "#{game['Team1']['TeamIconUrl']}"
+                    &nbsp;
+                    ="#{game['Team1']['TeamName']}"
+                %td
+                    =image_tag "#{game['Team2']['TeamIconUrl']}"
+                    &nbsp;
+                    ="#{game['Team2']['TeamName']}"
+                %td
+                    -if game['MatchResults'][0]
+                        game['MatchResults'][0]['PointTeam1']
+                        &#58
+                        game['MatchResults'][0]['PointTeam2']
+                    -else
+                        &nbsp;
+                %td
+                    = f.hidden_field :spiel, :value=>game['MatchID'], multiple:true
+                    -if game['active']
+                        = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]{1,2}", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry"
+                    -else
+                        = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]{1,2}", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :disabled=>true
+                    &#58
+                    -if game['active']
+                        = f.text_field :tipp2, multiple:true, :value=>game['tipp2'], :pattern=>"[0-9]{1,2}", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry"
+                    -else
+                        = f.text_field :tipp2, multiple:true, :value=>game['tipp2'], :pattern=>"[0-9]{1,2}", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :disabled=>true
+    =f.submit "speichern"

@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   delete '/posts/:id' => 'posts#destroy'
   get '/signup' => 'users#new'
   resource :users
+  get 'tippen' => 'tipps#index'
+  get '/tippen/:id' => 'tipps#show', as: :tipps
+  post '/tippen/:id' => 'tipps#create', as: :new_tipps
+  #resource :tipps
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
