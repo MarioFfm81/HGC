@@ -40,9 +40,9 @@
                 %td
                     = f.hidden_field :spiel, :value=>game['MatchID'], multiple:true
                     -if game['active']
-                        = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]{1,2}", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry"
+                        = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]*", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry"
                     -else
-                        = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]{1,2}", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :disabled=>true
+                        = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]*", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :disabled=>true
                     &#58
                     -if game['active']
                         = f.text_field :tipp2, multiple:true, :value=>game['tipp2'], :pattern=>"[0-9]{1,2}", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry"
