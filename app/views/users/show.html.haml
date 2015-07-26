@@ -1,0 +1,31 @@
+-if flash.notice
+    %div{:id=>"Flash", :class=>"success"} #{flash.notice}
+-if flash.alert
+    %div{:id=>"Flash", :class=>"alert"} #{flash.notice}
+
+= form_for @user do |f|
+    =f.hidden_field :id
+    %table{:class=>"user_table"}
+        %tr
+            %td Username
+            %td
+                =f.text_field :username, :disabled=>true
+        %tr
+            %td Anzeigename
+            %td
+                =f.text_field :nickname
+        %tr
+            %td Vorname
+            %td
+                =f.text_field :first_name
+        %tr
+            %td Nachname
+            %td 
+                =f.text_field :last_name
+        %tr
+            %td neues Passwort
+            %td
+                =f.password_field :password, :value=>"", :pattern=>".{1,}"
+        %tr
+            %td{:colspan=>"2"}
+                =f.submit "Update User"

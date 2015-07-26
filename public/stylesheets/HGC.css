@@ -48,3 +48,7 @@ html, body
 	background-color: #FFBABA;
 	color: #D8000C;
 }
+
+.user_table{
+	cellpadding: 5px;
+}

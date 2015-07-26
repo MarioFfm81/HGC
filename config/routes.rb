@@ -4,15 +4,19 @@ Rails.application.routes.draw do
   post '/posts' => 'posts#create'
   delete '/posts/:id' => 'posts#destroy'
   get '/signup' => 'users#new'
-  resource :users
+  get '/user/new' => 'users#new'
+  post '/user' => 'users#create', as: :user
+  post '/user' => 'users#create', as: :users
+  patch '/user' => 'users#update'
+  get '/user/edit' => 'users#show'
   get 'tippen' => 'tipps#index'
   get '/tippen/:id' => 'tipps#show', as: :tipps
   post '/tippen/:id' => 'tipps#create', as: :new_tipps
-  #resource :tipps
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
-  resource :games
+  get '/admin' => 'admins#show'
+  get '/admin/:id' => 'admins#update'
   resources :overviews
   
   

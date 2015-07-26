@@ -19,14 +19,16 @@
 				&#58
 				-if game['MatchResults'][0]
 					{game['MatchResults'][0]['PointsTeam2']}
-		%td &nbsp;
-		%td &nbsp;
-		%td &nbsp;
+		%td Aktuell
+		%td Bisher
+		%td Gesamt
 	-@users.each do |user|
 		%tr
 			%td{:class=>"userCol1"} #{user.username}
-			-12.times do
+			-10.times do
 				%td
+			%td #{@resultPerUser[user.id]}
+			%td
 			
 
 .content #{@games[0]}

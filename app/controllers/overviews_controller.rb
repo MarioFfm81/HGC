@@ -24,5 +24,18 @@ class OverviewsController < ApplicationController
 		end
 		@games = JSON.parse res.body
 		@users = User.all
+		@resultPerUser=[]
+		@users.each do |user|
+			#r = Result.find_by year: @@SAISON, user_id: user.id	
+			upperEnd = params[:id].to_f-1
+			r = Result.where(year: @@SAISON, user_id: user.id, matchday: 0..upperEnd).all
+			res = 0.0
+			if r != nil
+				r.each do |matchdayResult|
+					res += matchdayResult.result
+				end
+			end
+			@resultPerUser[user.id] = res
+		end
 	end
 end

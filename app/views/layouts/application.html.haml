@@ -31,10 +31,12 @@
                   =link_to "Tippen", '/tippen'
             .col-xs-2
               -if current_user
-                Profil
+                .col-xs-2 
+                  =link_to "Profil", '/user/edit'
             .col-xs-2
-              -if current_user && current_user.admin?
-                Admin
+              -if current_user && (current_user.admin?)
+                .col-xs-2 
+                  =link_to "Admin", '/admin'
         - if current_user
           .col-xs-2
             %ul

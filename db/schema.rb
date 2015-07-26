@@ -11,11 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725071346) do
+ActiveRecord::Schema.define(version: 20150726164346) do
 
   create_table "posts", force: :cascade do |t|
     t.string   "title"
     t.string   "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.integer  "year"
+    t.integer  "matchday"
+    t.integer  "user_id"
+    t.float    "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -37,6 +46,7 @@ ActiveRecord::Schema.define(version: 20150725071346) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "role"
+    t.string   "nickname"
   end
 
 end

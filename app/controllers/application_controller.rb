@@ -10,15 +10,18 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_user
   
+  
   def current_user
-	@current_user ||= User.find(session[:user_id]) if session[:user_id]
+    current_user=User.find(session[:user_id]) if session[:user_id]
+    current_user.role=session[:hgcAdmin]  if session[:user_id]
+	  @current_user ||= current_user
   end
   
   def require_user
-	redirect_to '/login' unless current_user
+	  redirect_to '/login' unless current_user
   end
   
   def require_admin
-	redirect_to '/home' unless current_user && current_user.admin?
+	  redirect_to '/home' unless current_user && (current_user.admin? || session[:hgcAdmin])
   end
 end

@@ -1,0 +1,12 @@
+="Aktueller Spieltag: #{@currentMatchday['GroupOrderID']}"
+<br />
+="fertig berechnet: #{@lastCalculated}"
+<br />
+
+
+%select{:onchange=>"changeAdminUser(this)"}
+    -@users.each do |user|
+        -if user==current_user
+            %option{:value=>"/admin/#{user.id}", :selected=>true} #{user.username}
+        -else
+            %option{:value=>"/admin/#{user.id}"} #{user.username}
