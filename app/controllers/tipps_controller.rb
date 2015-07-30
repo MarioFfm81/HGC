@@ -45,17 +45,19 @@ class TippsController < ApplicationController
     def create
         allSaved=true
         for i in 0..8
-            tipp = Tipp.new
-            tipp.user_id = session[:user_id]
-            tipp.spiel = params['tipp']['spiel'][i]
+        	#check if tipp has already been entered for this game
+            oldTipp = Tipp.find_by user_id: session[:user_id], spiel: params['tipp']['spiel'][i]
+            if oldTipp
+                tipp = oldTipp
+            else
+            	tipp = Tipp.new
+            	tipp.user_id = session[:user_id]
+            	tipp.spiel = params['tipp']['spiel'][i]
+            end
             tipp.tipp1 = params['tipp']['tipp1'][i]
             tipp.tipp2 = params['tipp']['tipp2'][i]
             
-            #delete existing tipp for this user and match
-            oldTipp = Tipp.find_by user_id: session[:user_id], spiel: params['tipp']['spiel'][i]
-            if oldTipp
-                oldTipp.destroy
-            end
+            
             
             #save new tipp
             if tipp.tipp1!=nil || tipp.tipp2!=nil

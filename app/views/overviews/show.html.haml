@@ -4,7 +4,7 @@
 			%option{:value=>"#{overview_path(i)}", :selected=>true} Spieltag #{i}
 		-else
 			%option{:value=>"#{overview_path(i)}"} Spieltag #{i}
-	
+
 %table{:border=>"1", :id=>"ContentTable"}
 	%tr
 		%td
@@ -25,10 +25,15 @@
 	-@users.each do |user|
 		%tr
 			%td{:class=>"userCol1"} #{user.username}
-			-10.times do
-				%td
-			%td #{@resultPerUser[user.id]}
-			%td
+			-total=0.0
+			-@games.each do |game|
+				-total+=game[user.id][2]
+				%td{:class=>game[user.id][1]} #{game[user.id][0]}
+			-if total <= 0.0
+				-total = 0.0
+			%td{:class=>"tippCell"} #{number_with_delimiter(number_with_precision(total,precision: 2),separator: ",").to_s}
+			%td{:class=>"tippCell"} #{number_with_delimiter(number_with_precision(@resultPerUser[user.id],precision: 2),separator: ",").to_s}
+			%td{:class=>"tippCell"} #{number_with_delimiter(number_with_precision((total+@resultPerUser[user.id]),precision: 2),separator: ",").to_s}
 			
 
 .content #{@games[0]}

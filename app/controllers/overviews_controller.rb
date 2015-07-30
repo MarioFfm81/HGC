@@ -22,8 +22,54 @@ class OverviewsController < ApplicationController
 		res = Net::HTTP.start(url.host,url.port) do |http|
 		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{@currentMatchday}")
 		end
-		@games = JSON.parse res.body
 		@users = User.all
+		@games = JSON.parse res.body
+		@games.each do |game|
+		    t = DateTime.parse(game['MatchDateTime'])
+		    game['active'] = t>Time.now
+		    @users.each do |user|
+		       game[user.id] = []
+		       #put result per user in game JSON
+		       tipp = user.tipps.find_by(:user_id=>user.id, :spiel=> game['MatchID']) 
+		       if tipp
+		           game[user.id][0] = "#{tipp.tipp1.to_s} : #{tipp.tipp2.to_s}"
+		           #put class information for cell and costs for player/game in game JSON
+		           #if game['MatchIsFinished'] #if game has ended
+		           if 1 #if game has ended
+                        #if tipp.tipp1==game['MatchResults'][0]['PointsTeam1'] && tipp.tipp2 ==game['MatchResults'][0]['PointsTeam2']
+                        if tipp.tipp1==1 && tipp.tipp2 ==1
+                            game[user.id][1]="tippCell greenCell"
+                            game[user.id][2]=-0.5
+                        else 
+                            #if tipp.tipp2-tipp.tipp1 == game['MatchResults'][0]['PointsTeam2']-game['MatchResults'][0]['PointsTeam1']
+                            if tipp.tipp2-tipp.tipp1 == 1-2
+                                game[user.id][1]="tippCell yellowCell"
+                                game[user.id][2]=-0.25
+                            else
+                                game[user.id][1]="tippCell redCell"
+                                game[user.id][2]=0.25
+                            end
+                        end
+		           else
+		                game[user.id][1] = "tippCell"
+		                game[user.id][2] = 0.25
+		           end
+		       else
+		           #if game['MatchIsFinished'] #if game has ended
+		           if 1 #if game has ended
+		                game[user.id][1] = "tippCell redCell"
+		                game[user.id][2] = 0.25
+		           else
+		                game[user.id][0] = " "
+		                game[user.id][1] = "tippCell"
+		                game[user.id][2] = 0.25
+		           end
+		       end
+		       
+		       
+		    end
+		end
+		
 		@resultPerUser=[]
 		@users.each do |user|
 			#r = Result.find_by year: @@SAISON, user_id: user.id	

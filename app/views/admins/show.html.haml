@@ -1,9 +1,20 @@
+-if flash.notice
+    %div{:id=>"Flash", :class=>"success"} #{flash.notice}
+-if flash.alert
+    %div{:id=>"Flash", :class=>"alert"} #{flash.alert}
+<br /><br />
 ="Aktueller Spieltag: #{@currentMatchday['GroupOrderID']}"
 <br />
 ="fertig berechnet: #{@lastCalculated}"
 <br />
-
-
+<br />
+= form_tag calculate_path do
+    %select{:name => 'matchdaySelected'}
+        -(1..34).each do |i|
+            %option{:value=>"#{i}"} Spieltag #{i}
+        %option{:value=>"all"} alle Spieltage
+    =submit_tag "berechnen"
+<br /><br />
 %select{:onchange=>"changeAdminUser(this)"}
     -@users.each do |user|
         -if user==current_user

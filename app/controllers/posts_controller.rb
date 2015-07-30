@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+	skip_before_action :verify_authenticity_token, only: [:destroy]
 	before_action :require_admin, only: [:new, :create, :destroy]
 	
 	def new
@@ -12,6 +13,14 @@ class PostsController < ApplicationController
 		else
 			redirect_to '/posts/new'
 		end
+	end
+	
+	def destroy
+		@post = Post.find(params[:id])
+		if @post
+			@post.destroy
+		end
+		redirect_to '/'
 	end
 	
 	def index

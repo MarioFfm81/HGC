@@ -1,7 +1,7 @@
 -if flash.notice
     %div{:id=>"Flash", :class=>"success"} #{flash.notice}
 -if flash.alert
-    %div{:id=>"Flash", :class=>"alert"} #{flash.notice}
+    %div{:id=>"Flash", :class=>"alert"} #{flash.alert}
 %select{:onchange=>"changeMatchday(this)"}
     -(1..34).each do |i|
         -if i==@currentMatchday.to_i

@@ -26,7 +26,6 @@ html, body
 
 .userCol1{
 	min-width: 100px;
-	
 	padding-left: 5px;
 }
 
@@ -49,6 +48,19 @@ html, body
 	color: #D8000C;
 }
 
-.user_table{
-	cellpadding: 5px;
+
+.tippCell{
+	text-align: center;
+}
+.greenCell{
+	background-color: #DFF2BF;
+	color: #4F8A10;
+}
+.yellowCell{
+	background-color: #FEEFB3;
+	color: #9F6000;
+}
+.redCell{
+	background-color: #FFBABA;
+	color: #D8000C;
 }

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get '/admin' => 'admins#show'
   get '/admin/:id' => 'admins#update'
   resources :overviews
+  post '/calculate' => 'matchday#calculate', as: :calculate
   
   
   get '/' => 'posts#index'
