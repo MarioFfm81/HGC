@@ -25,17 +25,81 @@ class TippsController < ApplicationController
 		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{@currentMatchday}")
 		end
 		@games = JSON.parse res.body
+		@previousGames={}
 		@games.each do |game|
 		    t = DateTime.parse(game['MatchDateTime'])
 		    oldTipp = Tipp.find_by user_id: session[:user_id], spiel: game['MatchID']
 		    if oldTipp
+		    	game['class'] = ""
 		        game['tipp1'] = oldTipp.tipp1
 		        game['tipp2'] = oldTipp.tipp2
+		        if game['MatchIsFinished'] && game['MatchResults'][0]
+		        	if game['MatchResults'][0]['PointsTeam1'] == oldTipp.tipp1 && game['MatchResults'][0]['PointsTeam2'] == oldTipp.tipp2
+		        		game['class'] = "greenCell"
+		        	else
+		        		if game['MatchResults'][0]['PointsTeam2'] - game['MatchResults'][0]['PointsTeam1'] == oldTipp.tipp2 - oldTipp.tipp1
+		        			game['class'] = "yellowCell"
+		        		else
+		        			game['class'] = 'redCell'
+		        		end
+		        	end
+		        end
             end
 		    game['date'] = t.strftime("%d.%m.%Y")
 		    game['time'] = t.strftime("%H:%M")
 		    game['active'] = t>Time.now
+		    
+		    @previousGames[game['Team1']['TeamId']] = {}
+		    @previousGames[game['Team2']['TeamId']] = {}
 		end
+		
+		myMatchday = @currentMatchday.to_i
+		mySaison = @@SAISON.to_i
+		5.times do |i|
+			myMatchday -= 1
+			if myMatchday == 0
+				myMatchday = 34
+				mySaison -= 1
+			end
+			
+			tempGames=[]
+			url = URI.parse(@@URI)
+			res = Net::HTTP.start(url.host,url.port) do |http|
+		  		http.get("#{@@API_PATH}/#{@@LEAGUE}/#{mySaison}/#{myMatchday}")
+			end
+			tempGames = JSON.parse res.body
+			tempGames.each do |tempGame|
+				t = DateTime.parse(tempGame['MatchDateTime'])
+				if @previousGames[tempGame['Team1']['TeamId']]
+					@previousGames[tempGame['Team1']['TeamId']]["#{i}"] = {}
+					@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['date'] = t.strftime("%d.%m.%Y")
+					@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['icon1'] = tempGame['Team1']['TeamIconUrl']
+					@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['icon2'] = tempGame['Team2']['TeamIconUrl']
+					if tempGame['MatchResults'][0]
+						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result1'] = tempGame['MatchResults'][0]['PointsTeam1']
+						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result2'] = tempGame['MatchResults'][0]['PointsTeam2']
+					else
+						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result1'] = ""
+						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result2'] = ""
+					end
+				end
+				
+				if @previousGames[tempGame['Team2']['TeamId']]
+					@previousGames[tempGame['Team2']['TeamId']]["#{i}"] = {}
+					@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['date'] = t.strftime("%d.%m.%Y")
+					@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['icon1'] = tempGame['Team1']['TeamIconUrl']
+					@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['icon2'] = tempGame['Team2']['TeamIconUrl']
+					if tempGame['MatchResults'][0]
+						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result1'] = tempGame['MatchResults'][0]['PointsTeam1']
+						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result2'] = tempGame['MatchResults'][0]['PointsTeam2']
+					else
+						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result1'] = ""
+						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result2'] = ""
+					end
+				end
+			end
+		end
+		
 	end
 	
     def new

@@ -19,33 +19,38 @@
             %span{:class => "col-xs-10 visible-sm text-green", :style => "font-size:20px;font-weight:bold;"} Harti's Gartenclub
             %span{:class => "col-xs-10 visible-md visible-lg text-green", :style => "font-size:30px;font-weight:bold;"} Harti's Gartenclub
       .row
-        .col-xs-10
+        .col-xs-9
           .row
-            .col-xs-2 
-              =link_to "Startseite", "/"
-            .col-xs-2 
-              =link_to "Tippübersicht", '/overviews'
-            .col-xs-2
-              -if current_user
-                .col-xs-2 
-                  =link_to "Tippen", '/tippen'
-            .col-xs-2
-              -if current_user
-                .col-xs-2 
-                  =link_to "Profil", '/user/edit'
-            .col-xs-2
-              -if current_user && (current_user.admin?)
-                .col-xs-2 
-                  =link_to "Admin", '/admin'
+            %a{:href => '/'}
+              .col-xs-2 Startseite
+            %a{:href => '/overviews'}
+              .col-xs-2 Tippübersicht
+            -if current_user
+              %a{:href => '/tippen'}
+                .col-xs-2 Tippen
+            -else
+              .col-xs-2 &nbsp;
+            -if current_user
+              %a{:href => '/user/edit'}
+                .col-xs-2 Profil
+            -else
+              .col-xs-2 &nbsp;
+            -if current_user && (current_user.admin?)
+              %a{:href => '/admin'}
+                .col-xs-2 Admin
+            -else
+              .col-xs-2 &nbsp;
         - if current_user
-          .col-xs-2
-            %ul
-              %li= current_user.username
-              %li= link_to "ausloggen", logout_path, :method=>:delete
+          .col-xs-3{:align => 'right'}
+            -if current_user.nickname != ""
+              = "Hallo #{current_user.nickname}"
+            -else
+              = "Hallo #{current_user.username}"
+            &nbsp;
+            =link_to "ausloggen", logout_path, :method=>:delete
         - else
-          .col-xs-2
-            %ul
-              %li &nbsp;
-              %li= link_to "einloggens", login_path
+          .col-xs-3{:align => 'right'}
+            = link_to "einloggen", login_path
+      %br
 
       = yield

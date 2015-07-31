@@ -25,7 +25,11 @@ class MatchdayController < ApplicationController
                 newPost.content = ""
                 Result.where(:year => @@SAISON, :matchday => @currentMatchday.to_i).order(result: :asc).each do |res|
                     tempRes = '%.2f' % res.result
-                    newPost.content += "#{res.user.username}: #{tempRes.to_s.gsub('.',',')}€\n"
+                    if res.user.nickname != ""
+                        newPost.content += "#{res.user.nickname}: #{tempRes.to_s.gsub('.',',')}€\n"
+                    else
+                        newPost.content += "#{res.user.username}: #{tempRes.to_s.gsub('.',',')}€\n" 
+                    end
                 end
                 newPost.save
             end

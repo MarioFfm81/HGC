@@ -22,8 +22,8 @@ class OverviewsController < ApplicationController
 		res = Net::HTTP.start(url.host,url.port) do |http|
 		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{@currentMatchday}")
 		end
-		@users = User.all
 		@games = JSON.parse res.body
+		@users = User.all
 		@games.each do |game|
 		    t = DateTime.parse(game['MatchDateTime'])
 		    game['active'] = t>Time.now

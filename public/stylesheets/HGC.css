@@ -5,9 +5,23 @@ html, body
 
 }
 
+th{
+	text-align: center;
+}
+
 .vertical-align{
     display: flex;
     align-items: center;
+}
+
+.menuCell{
+	color: #dddddd;
+	background-image: url(/img/table_background.png);
+}
+
+.menuCell:hover{
+	color: #327837;
+	background-color: #c8cd3c;
 }
 
 .text-green{
@@ -63,4 +77,9 @@ html, body
 .redCell{
 	background-color: #FFBABA;
 	color: #D8000C;
+}
+
+.emptyOverviewCell{
+	border-top: none;
+	border-left: none;
 }
