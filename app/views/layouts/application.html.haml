@@ -7,38 +7,39 @@
     = javascript_include_tag "application"
   %body
     .container
-      .jumbotron{:style => "background-image: url(/img/green01_bg_tile.png);"}
+      %div{:style => "background-image: url(/img/green01_bg_tile.png); padding:10px;"}
         %div{:class => "row vertical-align"}
           %div{:class => "col-xs-1 text-center"}
             %img{:src => "/img/augeGottes.gif", :height => 25, :width => 17, :class => "visible-xs"}
             %img{:src => "/img/augeGottes.gif", :height => 50, :width => 35, :class => "visible-sm"}
             %img{:src => "/img/augeGottes.gif", :height => 60, :width => 42, :class => "visible-md visible-lg"}
-          %div{:class => "col-xs-9 text-left"}
+          %div{:class => "col-xs-11 text-center"}
             %span{:class => "col-xs-10 visible-xs text-green", :style => "font-size:15px;font-weight:bold;"} Harti's Gartenclub
-            %span{:class => "col-xs-10 visible-sm text-green", :style => "font-size:20px;font-weight:bold;"} Harti's Gartenclub
-            %span{:class => "col-xs-10 visible-md visible-lg text-green", :style => "font-size:30px;font-weight:bold;"} Harti's Gartenclub
-      .row
+            %span{:class => "col-xs-10 visible-sm text-green", :style => "font-size:30px;font-weight:bold;"} Harti's Gartenclub
+            %span{:class => "col-xs-10 visible-md visible-lg text-green", :style => "font-size:40px;font-weight:bold;"} Harti's Gartenclub
+      %div{:class => 'row menuCellInactive', :style => "margin:0px;"}
         .col-xs-9
           .row
             %a{:href => '/'}
-              .col-xs-2 Startseite
+              .col-xs-2{:class => 'menuCell'} Startseite
             %a{:href => '/overviews'}
-              .col-xs-2 Tippübersicht
+              .col-xs-2{:class => 'menuCell'} Tippübersicht
             -if current_user
               %a{:href => '/tippen'}
-                .col-xs-2 Tippen
+                .col-xs-2{:class => 'menuCell'} Tippen
             -else
               .col-xs-2 &nbsp;
             -if current_user
               %a{:href => '/user/edit'}
-                .col-xs-2 Profil
+                .col-xs-2{:class => 'menuCell'} Profil
             -else
               .col-xs-2 &nbsp;
             -if current_user && (current_user.admin?)
               %a{:href => '/admin'}
-                .col-xs-2 Admin
+                .col-xs-2{:class => 'menuCell'} Admin
             -else
               .col-xs-2 &nbsp;
+            .col-xs-2 &nbsp;
         - if current_user
           .col-xs-3{:align => 'right'}
             -if current_user.nickname != ""
@@ -46,10 +47,10 @@
             -else
               = "Hallo #{current_user.username}"
             &nbsp;
-            =link_to "ausloggen", logout_path, :method=>:delete
+            =link_to "ausloggen", logout_path, :method=>:delete, :class => "login small"
         - else
           .col-xs-3{:align => 'right'}
-            = link_to "einloggen", login_path
+            = link_to "einloggen", login_path, :class => 'login'
       %br
 
       = yield

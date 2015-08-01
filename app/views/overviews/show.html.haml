@@ -1,6 +1,6 @@
 .row
 	.col-xs-1 &nbsp;
-	.col-xs-10
+	.col-xs-10{:class => 'text-right'}
 		%select{:onchange=>"changeMatchday(this)"}
 			-(1..34).each do |i|
 				-if i==@currentMatchday.to_i
@@ -9,9 +9,9 @@
 					%option{:value=>"#{overview_path(i)}"} Spieltag #{i}
 
 .row
-	.col-xs-1 &nbsp;
+	.col-md-1 &nbsp;
 	.col-xs-10
-		%table{:border=>"1", :id=>"ContentTable", :width => "100%"}
+		%table{:border=>"0", :id=>"ContentTable", :width => "100%"}
 			%tr
 				%td{:class => "emptyOverviewCell"} &nbsp;
 				-@games.each do |game|
@@ -25,12 +25,14 @@
 						&#58
 						-if game['MatchResults'][0]
 							{game['MatchResults'][0]['PointsTeam2']}
-				%td{:align => "center"} Aktuell
-				%td{:align => "center"} Bisher
-				%td{:align => "center"} Gesamt
+				%td{:align => "center", :valign => 'bottom'} Aktuell
+				%td{:align => "center", :valign => 'bottom'} Bisher
+				%td{:align => "center", :valign => 'bottom'} Gesamt
+			-counter=0
 			-@users.each do |user|
+				-counter += 1
 				%tr
-					%td{:class=>"userCol1"} 
+					%td{:class=>"cell#{counter%2} userCol1"} 
 						-if user.nickname != ""
 							=user.nickname
 						-else
@@ -38,13 +40,13 @@
 					-total=0.0
 					-@games.each do |game|
 						-total+=game[user.id][2]
-						%td{:class=>game[user.id][1]} #{game[user.id][0]}
+						%td{:class => "cell#{counter%2} #{game[user.id][1]}"} #{game[user.id][0]}
 					-if total <= 0.0
 						-total = 0.0
-					%td{:class=>"tippCell"} #{number_with_delimiter(number_with_precision(total,precision: 2),separator: ",").to_s}
-					%td{:class=>"tippCell"} #{number_with_delimiter(number_with_precision(@resultPerUser[user.id],precision: 2),separator: ",").to_s}
-					%td{:class=>"tippCell"} #{number_with_delimiter(number_with_precision((total+@resultPerUser[user.id]),precision: 2),separator: ",").to_s}
+					%td{:class=>"cell#{counter%2} tippCell"} #{number_with_delimiter(number_with_precision(total,precision: 2),separator: ",").to_s}
+					%td{:class=>"cell#{counter%2} tippCell"} #{number_with_delimiter(number_with_precision(@resultPerUser[user.id],precision: 2),separator: ",").to_s}
+					%td{:class=>"cell#{counter%2} tippCell"} #{number_with_delimiter(number_with_precision((total+@resultPerUser[user.id]),precision: 2),separator: ",").to_s}
 			
 
-.content #{@games[0]}
+
 
