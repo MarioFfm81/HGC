@@ -7,7 +7,7 @@
 					%option{:value=>"#{overview_path(i)}", :selected=>true} Spieltag #{i}
 				-else
 					%option{:value=>"#{overview_path(i)}"} Spieltag #{i}
-
+%br
 .row
 	.col-md-1 &nbsp;
 	.col-xs-10
@@ -25,9 +25,9 @@
 						&#58
 						-if game['MatchResults'][0]
 							{game['MatchResults'][0]['PointsTeam2']}
-				%td{:align => "center", :valign => 'bottom'} Aktuell
-				%td{:align => "center", :valign => 'bottom'} Bisher
-				%td{:align => "center", :valign => 'bottom'} Gesamt
+				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Aktuell
+				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Bisher
+				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Gesamt
 			-counter=0
 			-@users.each do |user|
 				-counter += 1
@@ -43,9 +43,9 @@
 						%td{:class => "cell#{counter%2} #{game[user.id][1]}"} #{game[user.id][0]}
 					-if total <= 0.0
 						-total = 0.0
-					%td{:class=>"cell#{counter%2} tippCell"} #{number_with_delimiter(number_with_precision(total,precision: 2),separator: ",").to_s}
-					%td{:class=>"cell#{counter%2} tippCell"} #{number_with_delimiter(number_with_precision(@resultPerUser[user.id],precision: 2),separator: ",").to_s}
-					%td{:class=>"cell#{counter%2} tippCell"} #{number_with_delimiter(number_with_precision((total+@resultPerUser[user.id]),precision: 2),separator: ",").to_s}
+					%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(total,precision: 2),separator: ",").to_s} €
+					%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(@resultPerUser[user.id],precision: 2),separator: ",").to_s} €
+					%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision((total+@resultPerUser[user.id]),precision: 2),separator: ",").to_s} €
 			
 
 

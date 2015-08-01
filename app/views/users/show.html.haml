@@ -3,29 +3,33 @@
 -if flash.alert
     %div{:id=>"Flash", :class=>"alert"} #{flash.notice}
 
-= form_for @user do |f|
-    =f.hidden_field :id
-    %table{:class=>"user_table"}
-        %tr
-            %td Username
-            %td
-                =f.text_field :username, :disabled=>true
-        %tr
-            %td Anzeigename
-            %td
-                =f.text_field :nickname
-        %tr
-            %td Vorname
-            %td
-                =f.text_field :first_name
-        %tr
-            %td Nachname
-            %td 
-                =f.text_field :last_name
-        %tr
-            %td neues Passwort
-            %td
-                =f.password_field :password, :value=>"", :pattern=>".{1,}"
-        %tr
-            %td{:colspan=>"2"}
-                =f.submit "Update User"
+.row
+    .col-xs-1 &nbsp;
+    .col-xs-10
+        = form_for @user do |f|
+            =f.hidden_field :id
+            %table{:class=>"userTable"}
+                %tr
+                    %td{:class=>"userTable"} Username
+                    %td{:class=>"userTable"}
+                        =f.text_field :username, :disabled=>true
+                %tr
+                    %td{:class=>"userTable"} Anzeigename
+                    %td{:class=>"userTable"}
+                        =f.text_field :nickname
+                %tr
+                    %td{:class=>"userTable"} Vorname
+                    %td{:class=>"userTable"}
+                        =f.text_field :first_name
+                %tr
+                    %td{:class=>"userTable"} Nachname
+                    %td{:class=>"userTable"} 
+                        =f.text_field :last_name
+                %tr
+                    %td{:class=>"userTable"} neues Passwort
+                    %td{:class=>"userTable"}
+                        =f.password_field :password, :value=>"", :pattern=>".{1,}"
+                %tr
+                    %td{:colspan=>"2", :align => "right"}
+                        %br
+                        =f.submit "Update User"

@@ -124,3 +124,22 @@ a.login{
 	border-top: 0px;
 	border-left-color: white;
 }
+
+.HeaderLastResults{
+    background-color: #eeeeee;
+    text-align: center;
+    font-weight: bold;
+}
+
+.userTable{
+    padding: 5px;
+}
+
+.postHeader{
+    font-weight: bold;
+    background-color: #dddddd;
+    padding: 5px;
+}
+.postContent{
+    padding-left: 5px;
+}
