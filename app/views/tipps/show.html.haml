@@ -57,7 +57,7 @@
             =f.submit "speichern"
 %div{:class => 'HeaderLastResults'} letzte Ergebnisse
 -@games.each do |game|
-    %div{:id => "#{game['MatchID']}", :class => "previousResults", :hidden => false}
+    %div{:id => "#{game['MatchID']}", :class => "previousResults", :hidden => true}
         .row
             .col-xs-6
                 -@previousGames[game['Team1']['TeamId']].each do |prev|
