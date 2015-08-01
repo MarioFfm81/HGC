@@ -21,10 +21,10 @@
 						=image_tag "#{game['Team2']['TeamIconUrl']}"
 						<br />
 						-if game['MatchResults'][0]
-							{game['MatchResults'][0]['PointsTeam1']}
+							=game['MatchResults'][0]['PointsTeam1']
 						&#58
 						-if game['MatchResults'][0]
-							{game['MatchResults'][0]['PointsTeam2']}
+							=game['MatchResults'][0]['PointsTeam2']
 				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Aktuell
 				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Bisher
 				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Gesamt

@@ -26,7 +26,9 @@ class TippsController < ApplicationController
 		end
 		@games = JSON.parse res.body
 		@previousGames={}
+		@oneActive = false
 		@games.each do |game|
+			@oneActive = true if game['MatchIsFinished'] == false
 		    t = DateTime.parse(game['MatchDateTime'])
 		    oldTipp = Tipp.find_by user_id: session[:user_id], spiel: game['MatchID']
 		    if oldTipp
@@ -44,6 +46,10 @@ class TippsController < ApplicationController
 		        		end
 		        	end
 		        end
+		    else
+		    	if game['MatchIsFinished']
+		    		game['class'] = 'redCell'
+		    	end
             end
 		    game['date'] = t.strftime("%d.%m.%Y")
 		    game['time'] = t.strftime("%H:%M")

@@ -36,31 +36,33 @@
                             =image_tag "#{game['Team2']['TeamIconUrl']}"
                             &nbsp;
                             ="#{game['Team2']['TeamName']}"
-                        %td{:align => 'center', :class => game['class']}
+                        %td{:align => 'center'}
                             -if game['MatchResults'][0]
-                                game['MatchResults'][0]['PointTeam1']
+                                =game['MatchResults'][0]['PointsTeam1']
                                 &#58
-                                game['MatchResults'][0]['PointTeam2']
+                                =game['MatchResults'][0]['PointsTeam2']
                             -else
                                 &nbsp;
                         %td{:align => 'center', :class => game['class']}
                             = f.hidden_field :spiel, :value=>game['MatchID'], multiple:true
                             -if game['active']
-                                = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]*", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :onfocus => "$('.previousResults').hide();$('\##{game['MatchID']}').show();showLastResults(#{game['MatchID']})"
+                                = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]*", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :onfocus => "showLastResults(#{game['MatchID']})"
                             -else
-                                = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]*", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :disabled=>true
+                                = f.hidden_field :tipp1, multiple:true, :value=>game['tipp1']
+                                = game['tipp1']
                             &#58
                             -if game['active']
                                 = f.text_field :tipp2, multiple:true, :value=>game['tipp2'], :pattern=>"[0-9]*", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :onfocus => "showLastResults(#{game['MatchID']})"
                             -else
-                                = f.text_field :tipp2, multiple:true, :value=>game['tipp2'], :pattern=>"[0-9]*", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :disabled=>true
+                                = f.hidden_field :tipp2, multiple:true, :value=>game['tipp2']
+                                = game['tipp2']
             %br
     .row
         .col-xs-1 &nbsp;
         .col-xs-10{:class => "text-right"}
-            =f.submit "speichern"
+            =f.submit "speichern" if @oneActive
 %br
-%div{:class => 'HeaderLastResults'} letzte Ergebnisse
+%div{:class => 'HeaderLastResults'}= "letzte Ergebnisse" if @oneActive
 %br
 -@games.each do |game|
     %div{:id => "#{game['MatchID']}", :class => "previousResults", :hidden => true}
