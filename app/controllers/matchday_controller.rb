@@ -1,6 +1,6 @@
 class MatchdayController < ApplicationController
     skip_before_action :require_admin, only: [:checkForFinishedMatchday]
-        
+    layout false
 
     
     def calculate
