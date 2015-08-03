@@ -91,13 +91,9 @@ class MatchdayController < ApplicationController
 		  http.get("#{@@API_CURR}/#{@@LEAGUE}")
 		end
 		currentMatchday = JSON.parse res.body
-		puts "test"
 		if currentMatchday['GroupOrderID']
-		    puts "ahllo"
 			lastCalculated = Result.where(:year => @@SAISON).maximum(:matchday).to_i
-			puts "hier"
 			lastCalculated = 0 if !lastCalculated
-			puts "last: #{lastCalculated}"
 			if currentMatchday['GroupOrderID'].to_i > lastCalculated.to_i
 		    	games=[]
         		url = URI.parse(@@URI)
@@ -105,7 +101,9 @@ class MatchdayController < ApplicationController
         		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{currentMatchday['GroupOrderID']}")
         		end
         		games = JSON.parse res.body
+        		puts "#{@@URI}#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{currentMatchday['GroupOrderID']}"
         		puts games
+        		
         		allFinished = true
         		games.each do |game|
         		    if !game['MatchIsFinished']
