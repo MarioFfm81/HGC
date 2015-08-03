@@ -99,12 +99,13 @@ class MatchdayController < ApplicationController
 			lastCalculated = 0 if !lastCalculated
 			puts "last: #{lastCalculated}"
 			if currentMatchday['GroupOrderID'].to_i > lastCalculated.to_i
-			    	games=[]
-            		url = URI.parse(@@URI)
-            		res = Net::HTTP.start(url.host,url.port) do |http|
-            		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{currentMatchday['GroupOrderID']}")
-            		end
-            		games = JSON.parse res.body
+		    	games=[]
+        		url = URI.parse(@@URI)
+        		res = Net::HTTP.start(url.host,url.port) do |http|
+        		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{currentMatchday['GroupOrderID']}")
+        		end
+        		games = JSON.parse res.body
+        		puts games
         		allFinished = true
         		games.each do |game|
         		    if !game['MatchIsFinished']
