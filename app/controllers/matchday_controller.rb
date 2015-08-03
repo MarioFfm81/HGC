@@ -92,7 +92,8 @@ class MatchdayController < ApplicationController
 		end
 		currentMatchday = JSON.parse res.body
 		if currentMatchday['GroupOrderID']
-			lastCalculated = Result.where(:year => @@SAISON).maximum(:matchday)
+			lastCalculated = Result.where(:year => @@SAISON).maximum(:matchday).to_i
+			puts "hier"
 			lastCalculated = 0 if !lastCalculated
 			if currentMatchday['GroupOrderID'] > lastCalculated
 			    	games=[]
