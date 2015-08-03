@@ -1,5 +1,7 @@
 class MatchdayController < ApplicationController
-    before_action :require_admin
+    skip_before_action :require_admin, only: [:checkForFinishedMatchday]
+        
+
     
     def calculate
         @currentMatchday = params['matchdaySelected']
@@ -78,8 +80,38 @@ class MatchdayController < ApplicationController
         	end
         	res.result = total
         	res.save
-        end
-        	   
-		                
+        end 
+	end
+	
+	def checkForFinishedMatchday
+	    flash.notice = "nothing happened"
+        currentMatchday=[]
+		url = URI.parse(@@URI)
+		res = Net::HTTP.start(url.host,url.port) do |http|
+		  http.get("#{@@API_CURR}/#{@@LEAGUE}")
+		end
+		currentMatchday = JSON.parse res.body
+		if currentMatchday['GroupOrderID']
+			lastCalculated = Result.where(:year => @@SAISON).maximum(:matchday)
+			lastCalculated = 0 if !lastCalculated
+			if currentMatchday['GroupOrderID'] > lastCalculated
+			    	games=[]
+            		url = URI.parse(@@URI)
+            		res = Net::HTTP.start(url.host,url.port) do |http|
+            		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{currentMatchday['GroupOrderID']}")
+            		end
+            		games = JSON.parse res.body
+        		allFinished = true
+        		games.each do |game|
+        		    if !game['MatchIsFinished']
+        		        allFinished = false
+        		    end
+        		end
+        		if allFinished
+        		   calculateOneMatchday(currentMatchday['GroupOrderID']) 
+        		   flash.notice = "Spieltag #{currentMatchday['GroupOrderID']} berechnet"
+        		end
+			end
+		end
 	end
 end
