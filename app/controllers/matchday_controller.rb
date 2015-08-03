@@ -22,18 +22,6 @@ class MatchdayController < ApplicationController
         		end
             else
                 calculateOneMatchday(@currentMatchday.to_i)
-                newPost = Post.new
-                newPost.title = "Berechnung für Spieltag #{@currentMatchday.to_s} abgeschlossen"
-                newPost.content = ""
-                Result.where(:year => @@SAISON, :matchday => @currentMatchday.to_i).order(result: :asc).each do |res|
-                    tempRes = '%.2f' % res.result
-                    if res.user.nickname != ""
-                        newPost.content += "#{res.user.nickname}: #{tempRes.to_s.gsub('.',',')}€\n"
-                    else
-                        newPost.content += "#{res.user.username}: #{tempRes.to_s.gsub('.',',')}€\n" 
-                    end
-                end
-                newPost.save
             end
 		end
 		
@@ -80,7 +68,19 @@ class MatchdayController < ApplicationController
         	end
         	res.result = total
         	res.save
-        end 
+        end
+        newPost = Post.new
+        newPost.title = "Berechnung für Spieltag #{matchday.to_s} abgeschlossen"
+        newPost.content = ""
+        Result.where(:year => @@SAISON, :matchday => matchday.to_i).order(result: :asc).each do |res|
+            tempRes = '%.2f' % res.result
+            if res.user.nickname != ""
+                newPost.content += "#{res.user.nickname}: #{tempRes.to_s.gsub('.',',')}€\n"
+            else
+                newPost.content += "#{res.user.username}: #{tempRes.to_s.gsub('.',',')}€\n" 
+            end
+        end
+        newPost.save
 	end
 	
 	def checkForFinishedMatchday
