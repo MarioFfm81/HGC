@@ -91,7 +91,9 @@ class MatchdayController < ApplicationController
 		  http.get("#{@@API_CURR}/#{@@LEAGUE}")
 		end
 		currentMatchday = JSON.parse res.body
+		puts "test"
 		if currentMatchday['GroupOrderID']
+		    puts "ahllo"
 			lastCalculated = Result.where(:year => @@SAISON).maximum(:matchday).to_i
 			puts "hier"
 			lastCalculated = 0 if !lastCalculated
