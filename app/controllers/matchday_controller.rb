@@ -97,7 +97,8 @@ class MatchdayController < ApplicationController
 			lastCalculated = Result.where(:year => @@SAISON).maximum(:matchday).to_i
 			puts "hier"
 			lastCalculated = 0 if !lastCalculated
-			if currentMatchday['GroupOrderID'] > lastCalculated
+			puts "last: #{lastCalculated}"
+			if currentMatchday['GroupOrderID'].to_i > lastCalculated
 			    	games=[]
             		url = URI.parse(@@URI)
             		res = Net::HTTP.start(url.host,url.port) do |http|
@@ -111,6 +112,7 @@ class MatchdayController < ApplicationController
         		    end
         		end
         		if allFinished
+        		    puts "calculate"
         		   calculateOneMatchday(currentMatchday['GroupOrderID']) 
         		   flash.notice = "Spieltag #{currentMatchday['GroupOrderID']} berechnet"
         		end
