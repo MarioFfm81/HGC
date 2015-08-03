@@ -98,7 +98,7 @@ class MatchdayController < ApplicationController
 			puts "hier"
 			lastCalculated = 0 if !lastCalculated
 			puts "last: #{lastCalculated}"
-			if currentMatchday['GroupOrderID'].to_i > lastCalculated
+			if currentMatchday['GroupOrderID'].to_i > lastCalculated.to_i
 			    	games=[]
             		url = URI.parse(@@URI)
             		res = Net::HTTP.start(url.host,url.port) do |http|
