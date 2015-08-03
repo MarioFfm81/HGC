@@ -30,22 +30,23 @@
 				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Gesamt
 			-counter=0
 			-@users.each do |user|
-				-counter += 1
-				%tr
-					%td{:class=>"cell#{counter%2} userCol1"} 
-						-if user.nickname != ""
-							=user.nickname
-						-else
-							=user.username
-					-total=0.0
-					-@games.each do |game|
-						-total+=game[user.id][2]
-						%td{:class => "cell#{counter%2} #{game[user.id][1]}"} #{game[user.id][0]}
-					-if total <= 0.0
-						-total = 0.0
-					%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(total,precision: 2),separator: ",").to_s} €
-					%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(@resultPerUser[user.id],precision: 2),separator: ",").to_s} €
-					%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision((total+@resultPerUser[user.id]),precision: 2),separator: ",").to_s} €
+				-if user==current_user || @currentMatchday.to_i < 31
+					-counter += 1
+					%tr
+						%td{:class=>"cell#{counter%2} userCol1"} 
+							-if user.nickname != ""
+								=user.nickname
+							-else
+								=user.username
+						-total=0.0
+						-@games.each do |game|
+							-total+=game[user.id][2]
+							%td{:class => "cell#{counter%2} #{game[user.id][1]}"} #{game[user.id][0]}
+						-if total <= 0.0
+							-total = 0.0
+						%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(total,precision: 2),separator: ",").to_s} €
+						%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(@resultPerUser[user.id],precision: 2),separator: ",").to_s} €
+						%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision((total+@resultPerUser[user.id]),precision: 2),separator: ",").to_s} €
 			
 
 

@@ -101,8 +101,6 @@ class MatchdayController < ApplicationController
         		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{currentMatchday['GroupOrderID']}")
         		end
         		games = JSON.parse res.body
-        		puts "#{@@URI}#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{currentMatchday['GroupOrderID']}"
-        		puts games
         		
         		allFinished = true
         		games.each do |game|

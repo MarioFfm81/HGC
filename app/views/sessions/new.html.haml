@@ -1,4 +1,10 @@
-= form_for(:session, url: login_path) do |f|
-	= f.text_field :username, :placeholder => 'Username', :autofocus => true
-	= f.password_field :password, :placeholder => 'Passwort'
-	= f.submit 'login'
+.row
+	%div{:class => "col-xs-3 col-xs-push-3 text-right"}
+		= form_for(:session, url: login_path) do |f|
+			= f.text_field :username, :placeholder => 'Username', :autofocus => true
+			%br
+			%br
+			= f.password_field :password, :placeholder => 'Passwort'
+			%br
+			%br
+			= f.submit 'login'
