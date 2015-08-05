@@ -39,7 +39,7 @@ class OverviewsController < ApplicationController
                             game[user.id][1]="tippCell greenCell"
                             game[user.id][2]=-0.5
                         else 
-                            if tipp.tipp2-tipp.tipp1 == game['MatchResults'][0]['PointsTeam2']-game['MatchResults'][0]['PointsTeam1']
+                            if (tipp.tipp1 && tipp.tipp2) && tipp.tipp2-tipp.tipp1 == game['MatchResults'][0]['PointsTeam2']-game['MatchResults'][0]['PointsTeam1']
                                 game[user.id][1]="tippCell yellowCell"
                                 game[user.id][2]=-0.25
                             else

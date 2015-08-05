@@ -39,7 +39,7 @@ class TippsController < ApplicationController
 		        	if game['MatchResults'][0]['PointsTeam1'] == oldTipp.tipp1 && game['MatchResults'][0]['PointsTeam2'] == oldTipp.tipp2
 		        		game['class'] = "greenCell"
 		        	else
-		        		if game['MatchResults'][0]['PointsTeam2'] - game['MatchResults'][0]['PointsTeam1'] == oldTipp.tipp2 - oldTipp.tipp1
+		        		if (oldTipp.tipp1 != nil && oldTipp.tipp2 != nil) && game['MatchResults'][0]['PointsTeam2'] - game['MatchResults'][0]['PointsTeam1'] == oldTipp.tipp2 - oldTipp.tipp1
 		        			game['class'] = "yellowCell"
 		        		else
 		        			game['class'] = 'redCell'
@@ -130,7 +130,7 @@ class TippsController < ApplicationController
             
             
             #save new tipp
-            if tipp.tipp1!=nil || tipp.tipp2!=nil
+            if tipp.tipp1!=nil || tipp.tipp2!=nil || oldTipp
                 if !tipp.save #in case of an error whilst saving
                     allSaved=false
                 end

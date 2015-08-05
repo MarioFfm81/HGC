@@ -48,7 +48,7 @@ class MatchdayController < ApplicationController
         	        if tipp.tipp1==game['MatchResults'][0]['PointsTeam1'] && tipp.tipp2 ==game['MatchResults'][0]['PointsTeam2']
                         total +=-0.5
                     else 
-                        if tipp.tipp2-tipp.tipp1 == game['MatchResults'][0]['PointsTeam2']-game['MatchResults'][0]['PointsTeam1']
+                        if (tipp.tipp1 && tipp.tipp2) && tipp.tipp2-tipp.tipp1 == game['MatchResults'][0]['PointsTeam2']-game['MatchResults'][0]['PointsTeam1']
                             total +=-0.25
                         else
                             total +=0.25
