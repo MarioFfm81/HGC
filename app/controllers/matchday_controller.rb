@@ -84,7 +84,7 @@ class MatchdayController < ApplicationController
 	end
 	
 	def checkForFinishedMatchday
-	    flash.notice = "nothing happened"
+	    @message = "nothing happened"
         currentMatchday=[]
 		url = URI.parse(@@URI)
 		res = Net::HTTP.start(url.host,url.port) do |http|
@@ -109,9 +109,8 @@ class MatchdayController < ApplicationController
         		    end
         		end
         		if allFinished
-        		    puts "calculate"
         		   calculateOneMatchday(currentMatchday['GroupOrderID']) 
-        		   flash.notice = "Spieltag #{currentMatchday['GroupOrderID']} berechnet"
+        		   @message = "Spieltag #{currentMatchday['GroupOrderID']} berechnet"
         		end
 			end
 		end
