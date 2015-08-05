@@ -6,7 +6,11 @@
 		.col-xs-10
 			%div{:class =>'post'}
 				%div{:class => "postHeader"} 
-					=p.title
+					.row
+						.col-xs-9
+							=p.title
+						.col-xs-3{:class => "text-right postHeaderDate"}
+							=p.created_at.strftime("%d.%m.%Y - %H:%M")  
 				%div{:class => "postContent"} #{simple_format(p.content)}
 			-if current_user && current_user.admin?
 				%div{:class =>'col-xs-10 col-xs-push-1 text-right'}

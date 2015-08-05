@@ -140,6 +140,9 @@ a.login{
     background-color: #dddddd;
     padding: 5px;
 }
+.postHeaderDate{
+	font-weight: normal;
+}
 .postContent{
     padding-left: 5px;
 }

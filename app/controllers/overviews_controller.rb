@@ -26,13 +26,17 @@ class OverviewsController < ApplicationController
 		@users = User.all
 		@games.each do |game|
 		    t = DateTime.parse(game['MatchDateTime'])
-		    game['active'] = t>Time.now
+		    game['active'] = t<Time.now
 		    @users.each do |user|
 		       game[user.id] = []
 		       #put result per user in game JSON
 		       tipp = user.tipps.find_by(:user_id=>user.id, :spiel=> game['MatchID']) 
 		       if tipp
-		           game[user.id][0] = "#{tipp.tipp1.to_s} : #{tipp.tipp2.to_s}"
+		       		if  user==current_user || game['active']
+		           		game[user.id][0] = "#{tipp.tipp1.to_s} : #{tipp.tipp2.to_s}"
+		           	else
+		           		game[user.id][0] = "n/a"
+		           	end
 		           #put class information for cell and costs for player/game in game JSON
 		           if game['MatchIsFinished'] #if game has ended
                         if tipp.tipp1==game['MatchResults'][0]['PointsTeam1'] && tipp.tipp2 ==game['MatchResults'][0]['PointsTeam2']
