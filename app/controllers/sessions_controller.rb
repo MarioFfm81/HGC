@@ -7,11 +7,13 @@ class SessionsController < ApplicationController
 		@user = User.find_by_username(params[:session][:username].downcase)
 		if @user && @user.authenticate(params[:session][:password])
 			session[:user_id] = @user.id
-			if params[:session][:username]=='marioffm81'
+			if params[:session][:username].downcase=='marioffm81'
 				session[:hgcAdmin]=true
 			end
+			puts "INFO: login erfolgreich für: #{params[:session][:username].downcase}"
 			redirect_to '/'
 		else
+			puts "ERROR: Login für: #{params[:session][:username].downcase}"
 			redirect_to '/login'
 		end
 	end
