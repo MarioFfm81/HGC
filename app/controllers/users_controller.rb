@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 		if current_user.admin? || params['user']['username']=='marioffm81'
 			@user = User.new(user_params)
 			@user.role = "user"
+			@user.username = @user.username.downcase
 			if @user.save
 				session[:user_id] = @user.id
 				redirect_to '/'
