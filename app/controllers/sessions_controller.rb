@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-	skip_before_action :verify_authenticity_token, only: [:destroy, :create]
+	skip_before_action :verify_authenticity_token, only: [:destroy]
 	def new
 	end
 	
@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
 		@user = User.find_by_username(params[:session][:username].downcase)
 		if @user && @user.authenticate(params[:session][:password])
 			session[:user_id] = @user.id
+			puts "INFO: id in session: #{session[:user_id]}"
 			if params[:session][:username].downcase=='marioffm81'
 				session[:hgcAdmin]=true
 			end
