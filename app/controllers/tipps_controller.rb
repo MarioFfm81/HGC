@@ -53,7 +53,9 @@ class TippsController < ApplicationController
             end
 		    game['date'] = t.strftime("%d.%m.%Y")
 		    game['time'] = t.strftime("%H:%M")
-		    game['active'] = t>Time.now
+		    n = Time.now
+		    n = n - n.gmt_offset + 7200
+		    game['active'] = t>n
 		    
 		    @previousGames[game['Team1']['TeamId']] = {}
 		    @previousGames[game['Team2']['TeamId']] = {}

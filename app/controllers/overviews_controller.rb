@@ -26,7 +26,9 @@ class OverviewsController < ApplicationController
 		@users = User.all
 		@games.each do |game|
 		    t = DateTime.parse(game['MatchDateTime'])
-		    game['active'] = t<Time.now
+		    n = Time.now
+		    n = n - n.gmt_offset + 7200
+		    game['active'] = t<n
 		    @users.each do |user|
 		       game[user.id] = []
 		       #put result per user in game JSON
