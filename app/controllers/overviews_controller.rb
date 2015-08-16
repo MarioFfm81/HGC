@@ -41,11 +41,11 @@ class OverviewsController < ApplicationController
 		           	end
 		           #put class information for cell and costs for player/game in game JSON
 		           if game['MatchIsFinished'] #if game has ended
-                        if tipp.tipp1==game['MatchResults'][0]['PointsTeam1'] && tipp.tipp2 ==game['MatchResults'][0]['PointsTeam2']
+                        if tipp.tipp1==game['MatchResults'][game['MatchResults'].length-1]['PointsTeam1'] && tipp.tipp2 ==game['MatchResults'][game['MatchResults'].length-1]['PointsTeam2']
                             game[user.id][1]="tippCell greenCell"
                             game[user.id][2]=-0.5
                         else 
-                            if (tipp.tipp1 && tipp.tipp2) && tipp.tipp2-tipp.tipp1 == game['MatchResults'][0]['PointsTeam2']-game['MatchResults'][0]['PointsTeam1']
+                            if (tipp.tipp1 && tipp.tipp2) && tipp.tipp2-tipp.tipp1 == game['MatchResults'][game['MatchResults'].length-1]['PointsTeam2']-game['MatchResults'][game['MatchResults'].length-1]['PointsTeam1']
                                 game[user.id][1]="tippCell yellowCell"
                                 game[user.id][2]=-0.25
                             else

@@ -21,10 +21,10 @@
 						=image_tag "#{game['Team2']['TeamIconUrl']}"
 						<br />
 						-if game['MatchResults'][0]
-							=game['MatchResults'][0]['PointsTeam1']
+							=game['MatchResults'][game['MatchResults'].length-1]['PointsTeam1']
 						&#58
 						-if game['MatchResults'][0]
-							=game['MatchResults'][0]['PointsTeam2']
+							=game['MatchResults'][game['MatchResults'].length-1]['PointsTeam2']
 				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Aktuell
 				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Bisher
 				%td{:align => "center", :valign => 'bottom', :style => "padding:2px;padding-bottom:0px;"} Gesamt
@@ -47,7 +47,7 @@
 						%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(total,precision: 2),separator: ",").to_s} €
 						%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(@resultPerUser[user.id],precision: 2),separator: ",").to_s} €
 						%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision((total+@resultPerUser[user.id]),precision: 2),separator: ",").to_s} €
-			
+/=@games[0]['MatchResults'][@games[0]['MatchResults'].length-1]
 
 
 

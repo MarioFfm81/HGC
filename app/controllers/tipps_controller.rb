@@ -36,10 +36,10 @@ class TippsController < ApplicationController
 		        game['tipp1'] = oldTipp.tipp1
 		        game['tipp2'] = oldTipp.tipp2
 		        if game['MatchIsFinished'] && game['MatchResults'][0]
-		        	if game['MatchResults'][0]['PointsTeam1'] == oldTipp.tipp1 && game['MatchResults'][0]['PointsTeam2'] == oldTipp.tipp2
+		        	if game['MatchResults'][game['MatchResults'].length-1]['PointsTeam1'] == oldTipp.tipp1 && game['MatchResults'][game['MatchResults'].length-1]['PointsTeam2'] == oldTipp.tipp2
 		        		game['class'] = "greenCell"
 		        	else
-		        		if (oldTipp.tipp1 != nil && oldTipp.tipp2 != nil) && game['MatchResults'][0]['PointsTeam2'] - game['MatchResults'][0]['PointsTeam1'] == oldTipp.tipp2 - oldTipp.tipp1
+		        		if (oldTipp.tipp1 != nil && oldTipp.tipp2 != nil) && game['MatchResults'][game['MatchResults'].length-1]['PointsTeam2'] - game['MatchResults'][game['MatchResults'].length-1]['PointsTeam1'] == oldTipp.tipp2 - oldTipp.tipp1
 		        			game['class'] = "yellowCell"
 		        		else
 		        			game['class'] = 'redCell'
@@ -84,8 +84,8 @@ class TippsController < ApplicationController
 					@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['icon1'] = tempGame['Team1']['TeamIconUrl']
 					@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['icon2'] = tempGame['Team2']['TeamIconUrl']
 					if tempGame['MatchResults'][0]
-						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result1'] = tempGame['MatchResults'][0]['PointsTeam1']
-						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result2'] = tempGame['MatchResults'][0]['PointsTeam2']
+						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result1'] = tempGame['MatchResults'][tempGame['MatchResults'].length-1]['PointsTeam1']
+						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result2'] = tempGame['MatchResults'][tempGame['MatchResults'].length-1]['PointsTeam2']
 					else
 						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result1'] = ""
 						@previousGames[tempGame['Team1']['TeamId']]["#{i}"]['result2'] = ""
@@ -98,8 +98,8 @@ class TippsController < ApplicationController
 					@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['icon1'] = tempGame['Team1']['TeamIconUrl']
 					@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['icon2'] = tempGame['Team2']['TeamIconUrl']
 					if tempGame['MatchResults'][0]
-						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result1'] = tempGame['MatchResults'][0]['PointsTeam1']
-						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result2'] = tempGame['MatchResults'][0]['PointsTeam2']
+						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result1'] = tempGame['MatchResults'][tempGame['MatchResults'].length-1]['PointsTeam1']
+						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result2'] = tempGame['MatchResults'][tempGame['MatchResults'].length-1]['PointsTeam2']
 					else
 						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result1'] = ""
 						@previousGames[tempGame['Team2']['TeamId']]["#{i}"]['result2'] = ""
