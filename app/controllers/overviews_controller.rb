@@ -1,4 +1,6 @@
 class OverviewsController < ApplicationController
+	include OverviewsHelper
+	
 	def index
 		currentMatchday=[]
 		url = URI.parse(@@URI)
@@ -25,6 +27,7 @@ class OverviewsController < ApplicationController
 		@games = JSON.parse res.body
 		@users = User.all
 		@games.each do |game|
+			res1, res2 = getResult(game)
 		    t = DateTime.parse(game['MatchDateTime'])
 		    n = Time.now
 		    n = n - n.gmt_offset + 7200
@@ -41,11 +44,11 @@ class OverviewsController < ApplicationController
 		           	end
 		           #put class information for cell and costs for player/game in game JSON
 		           if game['MatchIsFinished'] #if game has ended
-                        if tipp.tipp1==game['MatchResults'][game['MatchResults'].length-1]['PointsTeam1'] && tipp.tipp2 ==game['MatchResults'][game['MatchResults'].length-1]['PointsTeam2']
+                        if tipp.tipp1==res1 && tipp.tipp2 == res2
                             game[user.id][1]="tippCell greenCell"
                             game[user.id][2]=-0.5
                         else 
-                            if (tipp.tipp1 && tipp.tipp2) && tipp.tipp2-tipp.tipp1 == game['MatchResults'][game['MatchResults'].length-1]['PointsTeam2']-game['MatchResults'][game['MatchResults'].length-1]['PointsTeam1']
+                            if (tipp.tipp1 && tipp.tipp2) && tipp.tipp2-tipp.tipp1 == res2-res1
                                 game[user.id][1]="tippCell yellowCell"
                                 game[user.id][2]=-0.25
                             else

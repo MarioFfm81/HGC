@@ -1,6 +1,8 @@
 class MatchdayController < ApplicationController
     skip_before_action :require_admin, only: [:checkForFinishedMatchday]
     layout false
+    
+    include OverviewsHelper
 
     
     def calculate
@@ -43,12 +45,13 @@ class MatchdayController < ApplicationController
 		users.each do |user|
 		    total = 0.0
 	        @games.each do |game|
+	            res1, res2 = getResult(game)
 	            tipp = user.tipps.find_by(:user_id=>user.id, :spiel=> game['MatchID']) 
 		        if tipp
-        	        if tipp.tipp1==game['MatchResults'][game['MatchResults'].length-1]['PointsTeam1'] && tipp.tipp2 ==game['MatchResults'][game['MatchResults'].length-1]['PointsTeam2']
+        	        if tipp.tipp1==res1 && tipp.tipp2 == res2
                         total +=-0.5
                     else 
-                        if (tipp.tipp1 && tipp.tipp2) && tipp.tipp2-tipp.tipp1 == game['MatchResults'][game['MatchResults'].length-1]['PointsTeam2']-game['MatchResults'][game['MatchResults'].length-1]['PointsTeam1']
+                        if (tipp.tipp1 && tipp.tipp2) && tipp.tipp2-tipp.tipp1 == res2-res1
                             total +=-0.25
                         else
                             total +=0.25
