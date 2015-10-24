@@ -46,7 +46,7 @@
 						%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(total,precision: 2),separator: ",").to_s} €
 						%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision(@resultPerUser[user.id],precision: 2),separator: ",").to_s} €
 						%td{:class=>"cell#{counter%2} text-right"} #{number_with_delimiter(number_with_precision((total+@resultPerUser[user.id]),precision: 2),separator: ",").to_s} €
-#=@games[0]
+/ =@games[0]
 
 
 
