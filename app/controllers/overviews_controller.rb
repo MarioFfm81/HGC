@@ -30,7 +30,7 @@ class OverviewsController < ApplicationController
 			res1, res2 = getResult(game)
 		    t = DateTime.parse(game['MatchDateTime'])
 		    n = Time.now
-		    n = n - n.gmt_offset + 7200
+		    n = n - n.gmt_offset + 3600
 		    game['active'] = t<n
 		    @users.each do |user|
 		       game[user.id] = []
