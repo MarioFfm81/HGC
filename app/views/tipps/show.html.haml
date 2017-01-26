@@ -29,11 +29,11 @@
                         %td{:align => 'center'} #{game['date']}
                         %td{:align => 'center'} #{game['time']}
                         %td
-                            =image_tag "#{game['Team1']['TeamIconUrl']}"
+                            =image_tag("#{game['Team1']['TeamIconUrl']}", size: "20")
                             &nbsp;
                             ="#{game['Team1']['TeamName']}"
                         %td
-                            =image_tag "#{game['Team2']['TeamIconUrl']}"
+                            =image_tag("#{game['Team2']['TeamIconUrl']}", size: "20")
                             &nbsp;
                             ="#{game['Team2']['TeamName']}"
                         %td{:align => 'center'}
@@ -74,9 +74,9 @@
                         .col-xs-2 
                             ="#{prev[1]['date']}"
                         .col-xs-6
-                            =image_tag prev[1]['icon1']
+                            =image_tag(prev[1]['icon1'], size: "20")
                             &nbsp;&#58&nbsp;
-                            =image_tag prev[1]['icon2']
+                            =image_tag(prev[1]['icon2'], size: "20")
                             &nbsp;-&nbsp;
                             ="#{prev[1]['result1']} : #{prev[1]['result2']}"
                         .col-xs-2 &nbsp;
@@ -87,8 +87,8 @@
                         .col-xs-2 
                             ="#{prev[1]['date']}"
                         .col-xs-6
-                            =image_tag prev[1]['icon1']
+                            =image_tag(prev[1]['icon1'], size: "20")
                             &nbsp;&#58&nbsp;
-                            =image_tag prev[1]['icon2']
+                            =image_tag(prev[1]['icon2'], size: "20")
                             &nbsp;-&nbsp;
                             ="#{prev[1]['result1']} : #{prev[1]['result2']}"

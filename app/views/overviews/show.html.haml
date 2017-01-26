@@ -17,9 +17,9 @@
 				-@games.each do |game|
 					-res1, res2 = getResult(game)
 					%td{:class=>"gameHeader"}
-						=image_tag "#{game['Team1']['TeamIconUrl']}"
+						=image_tag("#{game['Team1']['TeamIconUrl']}", size: "20")
 						&#58
-						=image_tag "#{game['Team2']['TeamIconUrl']}"
+						=image_tag("#{game['Team2']['TeamIconUrl']}", size: "20")
 						<br />
 						=res1
 						&#58
