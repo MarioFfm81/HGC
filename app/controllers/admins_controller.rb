@@ -3,11 +3,8 @@ class AdminsController < ApplicationController
     
     
     def show
-		url = URI.parse(@@URI)
-		res = Net::HTTP.start(url.host,url.port) do |http|
-		  http.get("#{@@API_CURR}/#{@@LEAGUE}")
-		end
-		@currentMatchday = JSON.parse res.body
+		res = open("#{@@URI}#{@@API_CURR}/#{@@LEAGUE}").read
+		@currentMatchday = JSON.parse res
         @users = User.all
         @lastCalculated = Result.where(:year => @@SAISON).maximum(:matchday)
     end
