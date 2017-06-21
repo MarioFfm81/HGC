@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  @@URI = "http://www.openligadb.de"
+  @@URI = "https://www.openligadb.de"
   @@API_PATH = "/api/getmatchdata"
   @@API_CURR = "/api/getcurrentgroup"
   @@LEAGUE = "bl1"

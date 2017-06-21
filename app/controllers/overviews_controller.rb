@@ -1,13 +1,20 @@
 class OverviewsController < ApplicationController
 	include OverviewsHelper
+	require 'open-uri'
 	
 	def index
 		currentMatchday=[]
 		url = URI.parse(@@URI)
-		res = Net::HTTP.start(url.host,url.port) do |http|
-		  http.get("#{@@API_CURR}/#{@@LEAGUE}")
-		end
-		currentMatchday = JSON.parse res.body
+		
+		res = open("#{@@URI}#{@@API_CURR}/#{@@LEAGUE}").read
+		#res = Net::HTTP.start(url.host,url.port) do |http|
+		#  http.get("#{@@API_CURR}/#{@@LEAGUE}")
+		#end
+		
+		print res
+		
+		currentMatchday = JSON.parse res
+		#currentMatchday = {"GroupOrderID"=>34}
 		@test = currentMatchday
 		if currentMatchday['GroupOrderID']
 			redirect_to "/overviews/#{currentMatchday['GroupOrderID']}"
@@ -20,11 +27,12 @@ class OverviewsController < ApplicationController
 			redirect_to "/overviews"
 		end
 		@games=[]
-		url = URI.parse(@@URI)
-		res = Net::HTTP.start(url.host,url.port) do |http|
-		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{@currentMatchday}")
-		end
-		@games = JSON.parse res.body
+		#url = URI.parse(@@URI)
+		#res = Net::HTTP.start(url.host,url.port) do |http|
+		#  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{@currentMatchday}")
+		#end
+		res = open("#{@@URI}#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{@currentMatchday}").read
+		@games = JSON.parse res
 		@users = User.all
 		@games.each do |game|
 			res1, res2 = getResult(game)

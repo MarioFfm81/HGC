@@ -2,11 +2,9 @@ class TippsController < ApplicationController
     before_action :require_user
     def index
 		currentMatchday=[]
-		url = URI.parse(@@URI)
-		res = Net::HTTP.start(url.host,url.port) do |http|
-		  http.get("#{@@API_CURR}/#{@@LEAGUE}")
-		end
-		currentMatchday = JSON.parse res.body
+		
+		res = open("#{@@URI}#{@@API_CURR}/#{@@LEAGUE}").read
+		currentMatchday = JSON.parse res
 		@test = currentMatchday
 		if currentMatchday['GroupOrderID']
 			redirect_to "/tippen/#{currentMatchday['GroupOrderID']}"
@@ -20,11 +18,8 @@ class TippsController < ApplicationController
 			redirect_to "/tippen"
 		end
 		@games=[]
-		url = URI.parse(@@URI)
-		res = Net::HTTP.start(url.host,url.port) do |http|
-		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{@currentMatchday}")
-		end
-		@games = JSON.parse res.body
+		res = open("#{@@URI}#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{@currentMatchday}").read
+		@games = JSON.parse res
 		@previousGames={}
 		@oneActive = false
 		@games.each do |game|
@@ -71,11 +66,8 @@ class TippsController < ApplicationController
 			end
 			
 			tempGames=[]
-			url = URI.parse(@@URI)
-			res = Net::HTTP.start(url.host,url.port) do |http|
-		  		http.get("#{@@API_PATH}/#{@@LEAGUE}/#{mySaison}/#{myMatchday}")
-			end
-			tempGames = JSON.parse res.body
+			res = open("#{@@URI}#{@@API_PATH}/#{@@LEAGUE}/#{mySaison}/#{myMatchday}").read
+			tempGames = JSON.parse res
 			tempGames.each do |tempGame|
 				t = DateTime.parse(tempGame['MatchDateTime'])
 				if @previousGames[tempGame['Team1']['TeamId']]
