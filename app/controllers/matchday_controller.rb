@@ -33,11 +33,8 @@ class MatchdayController < ApplicationController
     
     def calculateOneMatchday(matchday)
 		@games=[]
-		url = URI.parse(@@URI)
-		res = Net::HTTP.start(url.host,url.port) do |http|
-		  http.get("#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{matchday}")
-		end
-		@games = JSON.parse res.body
+		res = open("#{@@URI}#{@@API_PATH}/#{@@LEAGUE}/#{@@SAISON}/#{matchday}").read
+		@games = JSON.parse res
 		if !@games
 		    flash.alert= "Probleme beim Webservuce-Zugriff"
 		end

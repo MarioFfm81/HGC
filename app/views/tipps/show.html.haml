@@ -45,13 +45,13 @@
                                 &nbsp;
                         %td{:align => 'center', :class => game['class']}
                             = f.hidden_field :spiel, :value=>game['MatchID'], multiple:true
-                            -if not game['active']
+                            -if game['active']
                                 = f.text_field :tipp1, multiple:true, :value=>game['tipp1'], :pattern=>"[0-9]*", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :onfocus => "showLastResults(#{game['MatchID']})"
                             -else
                                 = f.hidden_field :tipp1, multiple:true, :value=>game['tipp1']
                                 = game['tipp1']
                             &#58
-                            -if not game['active']
+                            -if game['active']
                                 = f.text_field :tipp2, multiple:true, :value=>game['tipp2'], :pattern=>"[0-9]*", :title=>"max. 2-stellige Ergebnisse", :class=>"tippEntry", :onfocus => "showLastResults(#{game['MatchID']})"
                             -else
                                 = f.hidden_field :tipp2, multiple:true, :value=>game['tipp2']
@@ -60,7 +60,7 @@
     .row
         .col-xs-1 &nbsp;
         .col-xs-10{:class => "text-right"}
-            =f.submit "speichern" if not @oneActive
+            =f.submit "speichern" if @oneActive
 %br
 %div{:class => 'HeaderLastResults'}= "letzte Ergebnisse" if @oneActive
 %br
