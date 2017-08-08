@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   @@API_PATH = "/api/getmatchdata"
   @@API_CURR = "/api/getcurrentgroup"
   @@LEAGUE = "bl1"
-  @@SAISON = "2016"
+  @@SAISON = "2017"
   
   helper_method :current_user
   
