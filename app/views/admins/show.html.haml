@@ -21,3 +21,10 @@
             %option{:value=>"/admin/#{user.id}", :selected=>true} #{user.username}
         -else
             %option{:value=>"/admin/#{user.id}"} #{user.username}
+<br>
+-@results.each do |result|
+    =result.year
+    =result.user_id
+    =result.matchday
+    =result.result
+    <br>
