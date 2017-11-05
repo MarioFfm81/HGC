@@ -26,7 +26,7 @@ class TippsController < ApplicationController
 			@oneActive = true if game['MatchIsFinished'] == false
 		    t = DateTime.parse(game['MatchDateTime'])
 		    oldTipp = Tipp.find_by user_id: session[:user_id], spiel: game['MatchID']
-		    if oldTipp
+			if oldTipp
 		    	game['class'] = ""
 		        game['tipp1'] = oldTipp.tipp1
 		        game['tipp2'] = oldTipp.tipp2
@@ -45,11 +45,12 @@ class TippsController < ApplicationController
 		    	if game['MatchIsFinished']
 		    		game['class'] = 'redCell'
 		    	end
-            end
+		    	
+		    end
 		    game['date'] = t.strftime("%d.%m.%Y")
 		    game['time'] = t.strftime("%H:%M")
 		    n = Time.now
-		    n = n - n.gmt_offset + 7200
+		    n = n - n.gmt_offset + 3600
 		    game['active'] = t>n
 		    
 		    @previousGames[game['Team1']['TeamId']] = {}
