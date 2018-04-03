@@ -58,7 +58,7 @@ gem 'haml'
 
 gem 'coffee-script-source', '1.8.0'
 gem 'execjs'
-gem 'pg'
+gem 'pg', '~> 0.20'
 gem 'rails_12factor', group: :production
 
 ruby "2.2.1"
