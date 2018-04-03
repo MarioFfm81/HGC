@@ -66,6 +66,7 @@ class TippsController < ApplicationController
 				mySaison -= 1
 			end
 			
+			
 			tempGames=[]
 			res = open("#{@@URI}#{@@API_PATH}/#{@@LEAGUE}/#{mySaison}/#{myMatchday}").read
 			tempGames = JSON.parse res
