@@ -28,3 +28,13 @@
     =result.matchday
     =result.result
     <br>
+<br>
+<hl>
+-@users.each do |user|
+    =user.id
+    =user.nickname
+    =user.username
+    =user.password_digest
+    =user.first_name
+    =user.last_name
+    <br>

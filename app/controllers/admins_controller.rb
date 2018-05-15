@@ -7,7 +7,7 @@ class AdminsController < ApplicationController
 		@currentMatchday = JSON.parse res
         @users = User.all
         @lastCalculated = Result.where(:year => @@SAISON).maximum(:matchday)
-        @results = Result.where(:year => 2016)
+        @results = Result.where(:year => 2017)
     end
     
     def update
