@@ -29,7 +29,7 @@
     =result.result
     <br>
 <br>
-<hl>
+<hr>
 -@users.each do |user|
     =user.id
     =user.nickname
@@ -37,4 +37,13 @@
     =user.password_digest
     =user.first_name
     =user.last_name
+    <br>
+<br>
+<hr>
+-@tipps.each do|tipp|
+    =tipp.user_id
+    =tipp.spiel
+    =tipp.tipp1
+    =tipp.tipp2
+    =tipp.created_at
     <br>

@@ -3,11 +3,13 @@ class AdminsController < ApplicationController
     
     
     def show
-		res = open("#{@@URI}#{@@API_CURR}/#{@@LEAGUE}").read
-		@currentMatchday = JSON.parse res
+		#res = open("#{@@URI}#{@@API_CURR}/#{@@LEAGUE}").read
+		#@currentMatchday = JSON.parse res
+		@currentMatchday = "34"
         @users = User.all
         @lastCalculated = Result.where(:year => @@SAISON).maximum(:matchday)
         @results = Result.where(:year => 2017)
+        @tipps = Tipp.all
     end
     
     def update
